@@ -42,7 +42,7 @@ public class MainApplication implements ApplicationRunner {
 	Random random=new Random();
 	@Override
 	public void run(ApplicationArguments args)  {
-		
+
 		for(int i=0;i<10;i++) {
 			Zone zone=new Zone();
 			zone.setName("Zone "+(i+1));
