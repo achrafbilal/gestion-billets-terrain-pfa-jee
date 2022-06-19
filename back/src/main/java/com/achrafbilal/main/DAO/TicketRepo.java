@@ -12,7 +12,8 @@ import java.util.Optional;
 public interface TicketRepo extends JpaRepository<Ticket,Long> {
     List<Ticket> findAllByUserId(Long userId);
 
-    List<Ticket> findAllBySeatId(Long seatId);
+
+    List<Ticket> findAllByZoneId(Long id);
 
     Optional<Ticket> findTicketById(Long id);
 }

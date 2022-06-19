@@ -14,7 +14,7 @@ const RootComponent = () => {
   let navigate = useNavigate();
   const [auth, setAuth] = useState(localStorage.getItem('auth') !== null);
   const setAuthHandler = (user) => {
-    localStorage.setItem("auth", JSON.stringify({ username: user.username, role: user.role, token: user.token }))
+    localStorage.setItem("auth", JSON.stringify({ id: 31, username: user.username, role: user.role, token: user.token }))
     setAuth(true)
     navigate(
       '/',

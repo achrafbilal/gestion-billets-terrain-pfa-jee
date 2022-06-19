@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TicketService {
     List<Ticket> index();
+    List<Ticket> indexClient(Long id);
+    Integer seatsLeft(Long id);
     Ticket show(Long id);
     Ticket store(TicketRequest request);
     Ticket edit(TicketRequest request,Long id);

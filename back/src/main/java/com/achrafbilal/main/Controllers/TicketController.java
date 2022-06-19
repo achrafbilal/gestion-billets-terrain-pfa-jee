@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tickets")
+@CrossOrigin(origins = "*")
 public class TicketController {
     @Autowired
     TicketService ticketService;
@@ -17,6 +18,17 @@ public class TicketController {
     @GetMapping
     public List<Ticket> index(){
         return ticketService.index();
+    }
+
+    @GetMapping("/client/{id}")
+    public List<Ticket> indexClient(@PathVariable Long id){
+        System.out.println(id);
+        return ticketService.indexClient(id);
+    }
+
+    @GetMapping("/seats/left/{id}")
+    public Integer seatsLeft(@PathVariable  Long id) {
+        return ticketService.seatsLeft(id);
     }
     @GetMapping("/{id}")
     public Ticket show(@PathVariable Long id){

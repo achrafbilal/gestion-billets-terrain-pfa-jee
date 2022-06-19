@@ -1,21 +1,26 @@
 import axios from "axios";
-const URL = "localhost:9090/zones";
+const URL = "http://localhost:9090/zones";
 
 const getZones = async () => {
-    return axios.get(URL)
+    const { data } = await axios.get(URL)
+    return data
 }
 const getZone = async (id) => {
-    return axios.get(`${URL}/${id}`)
+    const { data } = await axios.get(`${URL}/${id}`)
+    return data
 }
 
 const addZone = async (zone) => {
-    return axios.post(`${URL}`, zone)
+    const { data } = await axios.post(`${URL}`, zone)
+    return data
 }
 const editZone = async (id, zone) => {
-    return axios.put(`${URL}/${id}`, zone)
+    const { data } = await axios.put(`${URL}/${id}`, zone)
+    return data
 }
 const deleteZone = async (id) => {
-    return axios.delete(`${URL}/${id}`)
+    const { data } = await axios.delete(`${URL}/${id}`)
+    return data
 }
 
-module.exports = { getZone: getZone, getZones: getZones, addZone: addZone, editZone: editZone, deleteZone: deleteZone }
+export { getZone, getZones, addZone, editZone, deleteZone }

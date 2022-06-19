@@ -19,17 +19,16 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private Long seatId;
+    private Long zoneId;
     @Temporal(TemporalType.TIMESTAMP)
     private Date purchaseDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date reservationDate;
-    private Double price;
 
     @Transient
     private String userEmail;
     @Transient
-    private Seat seat;
+    private String zoneName;
+    @Transient
+    private Integer seatsLeft;
 
     public Date parseDate(String value) throws ParseException {
         return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).parse(value);

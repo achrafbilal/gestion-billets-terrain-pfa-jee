@@ -1,21 +1,35 @@
 import axios from "axios";
-const URL = "localhost:9090/tickets";
+const URL = "http://localhost:9090/tickets";
 
 const getTickets = async () => {
-    return axios.get(URL)
+    const { data } = await axios.get(URL)
+    return data
+}
+const getClientTickets = async (client) => {
+    const { data } = await axios.get(`${URL}/client/${client}`)
+    return data
 }
 const getTicket = async (id) => {
-    return axios.get(`${URL}/${id}`)
+    const { data } = await axios.get(`${URL}/${id}`)
+    return data
+}
+const getSeatsLeft = async (zone) => {
+    const { data } = await axios.get(`${URL}/seats/left/${zone}`)
+    return data
 }
 
 const addTicket = async (ticket) => {
-    return axios.post(`${URL}`, ticket)
+    const { data } = await axios.post(`${URL}`, ticket)
+    console.log(data);
+    return data
 }
 const editTicket = async (id, ticket) => {
-    return axios.put(`${URL}/${id}`, ticket)
+    const { data } = await axios.put(`${URL}/${id}`, ticket)
+    return data
 }
 const deleteTicket = async (id) => {
-    return axios.delete(`${URL}/${id}`)
+    const { data } = await axios.delete(`${URL}/${id}`)
+    return data
 }
 
-module.exports = { getTicket: getTicket, getTickets: getTickets, addTicket: addTicket, editTicket: editTicket, deleteTicket: deleteTicket }
+export { getTicket, getTickets, addTicket, editTicket, deleteTicket, getSeatsLeft, getClientTickets }

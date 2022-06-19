@@ -5,15 +5,22 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const HeaderClient = () => {
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar
+      bg="dark"
+      variant="dark"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        zIndex: 1000,
+      }}
+    >
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>Stadium Mohamed V</Navbar.Brand>
         </LinkContainer>
         <Nav className="me-auto">
-          <LinkContainer to="seats">
-            <Nav.Link>Seats</Nav.Link>
-          </LinkContainer>
           <LinkContainer to="">
             <Nav.Link>My tickets</Nav.Link>
           </LinkContainer>

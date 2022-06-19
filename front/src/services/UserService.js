@@ -1,21 +1,30 @@
 import axios from "axios";
-const URL = "localhost:9090/users";
+const URL = "http://localhost:9090/users";
 
 const getUsers = async () => {
-    return axios.get(URL)
+    const { data } = await axios.get(URL)
+    return data
+}
+const getClients = async () => {
+    const { data } = await axios.get(`${URL}/role/3`)
+    return data
 }
 const getUser = async (id) => {
-    return axios.get(`${URL}/${id}`)
+    const { data } = await axios.get(`${URL}/${id}`)
+    return data;
 }
 
 const addUser = async (user) => {
-    return axios.post(`${URL}`, user)
+    const { data } = await axios.post(`${URL}`, user)
+    return data;
 }
 const editUser = async (id, user) => {
-    return axios.put(`${URL}/${id}`, user)
+    const { data } = await axios.put(`${URL}/${id}`, user)
+    return data;
 }
 const deleteUser = async (id) => {
-    return axios.delete(`${URL}/${id}`)
+    const { data } = await axios.delete(`${URL}/${id}`)
+    return data;
 }
 
-module.exports = { getUser: getUser, getUsers: getUsers, addUser: addUser, editUser: editUser, deleteUser: deleteUser }
+export { getUser, getUsers, addUser, editUser, deleteUser, getClients }

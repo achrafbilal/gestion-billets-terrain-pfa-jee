@@ -2,7 +2,7 @@ import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-const HeaderAdmin = () => {
+const HeaderSeller = () => {
   return (
     <Navbar
       bg="dark"
@@ -21,13 +21,7 @@ const HeaderAdmin = () => {
         </LinkContainer>
         <Nav className="me-auto">
           <LinkContainer to="/">
-            <Nav.Link>Users</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="zones">
-            <Nav.Link>Zones</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="tickets">
-            <Nav.Link>Tickets</Nav.Link>
+            <Nav.Link>Seats</Nav.Link>
           </LinkContainer>
         </Nav>
       </Container>
@@ -35,4 +29,4 @@ const HeaderAdmin = () => {
   );
 };
 
-export default HeaderAdmin;
+export default HeaderSeller;

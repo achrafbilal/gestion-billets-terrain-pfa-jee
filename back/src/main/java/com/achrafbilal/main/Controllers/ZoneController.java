@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/zones")
+@CrossOrigin(origins = "*")
 public class ZoneController {
     @Autowired
     ZoneService zoneService;
