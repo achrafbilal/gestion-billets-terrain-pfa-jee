@@ -11,17 +11,44 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as LinkR } from "react-router-dom";
+import { login } from "../../services/UserService";
 
 const theme = createTheme();
 
 export default function Login({ setAuth }) {
-  const handleSubmit = (event) => {
+  const fetchLogin = async (email, password) => {
+    await login(email, password)
+      .then((d) => {
+        console.log(d);
+        setAuth(d);
+      })
+
+      .catch((er) => console.log(er));
+  };
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    await fetchLogin(data.get("email"), data.get("password"));
+
+    /*
+
+
+onClick={() =>
+                  setAuth({
+                    username: "achraf",
+                    password: "password",
+                    token: "token",
+                    role: 1,
+                  })
+                }
+
+
+
+    */
   };
 
   return (
@@ -91,14 +118,6 @@ export default function Login({ setAuth }) {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={() =>
-                  setAuth({
-                    username: "achraf",
-                    password: "password",
-                    token: "token",
-                    role: 1,
-                  })
-                }
               >
                 Sign In
               </Button>

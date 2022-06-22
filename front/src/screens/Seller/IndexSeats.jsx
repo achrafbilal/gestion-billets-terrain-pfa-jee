@@ -17,7 +17,6 @@ const IndexSeats = () => {
   useEffect(() => {
     const getData = async () => {
       const clientsD = await getClients();
-      console.log(clientsD);
       setClients(clientsD);
       setClientsView(clientsD);
       const zonesD = await getZones();
@@ -31,7 +30,6 @@ const IndexSeats = () => {
     setZonesView(zones.filter((z) => z.name.includes(ev.target.value)));
   };
   const zoneChangeHandler = (ev) => {
-    console.log(ev.target.value);
     if (Number(ev.target.value) < 1) {
       setZone(null);
       return;
@@ -55,7 +53,6 @@ const IndexSeats = () => {
       return;
     }
     let zo = clients.find((z) => z.id === Number(ev.target.value));
-    console.log(zo);
     setClient(zo);
   };
   const orderButtonClickHandler = () => {

@@ -37,7 +37,7 @@ const ClientView = ({ auth }) => {
   </>;
 }
 const ElseHeader = ({ auth }) => {
-  return Number(auth.role) === 2 ?
+  return Number(auth.roleId) === 2 ?
     <HeaderSeller auth={auth} />
     :
 
@@ -45,15 +45,16 @@ const ElseHeader = ({ auth }) => {
 }
 const ElseView = ({ auth }) => {
 
-  return (Number(auth.role) === 2 ? <SellerView auth={auth} /> : <ClientView auth={auth} />)
+  return (Number(auth.roleId) === 2 ? <SellerView auth={auth} /> : <ClientView auth={auth} />)
 }
 
 function App() {
   const auth = JSON.parse(localStorage.getItem('auth'))
+
   return (
     <>
       {
-        Number(auth.role) === 1 ?
+        Number(auth.roleId) === 1 ?
           <HeaderAdmin auth={auth} />
           :
           <ElseHeader auth={auth} />
@@ -63,7 +64,7 @@ function App() {
       }}>
         {
 
-          Number(auth.role) === 1 ?
+          Number(auth.roleId) === 1 ?
             <AdminView auth={auth} /> :
             <ElseView auth={auth} />
         }

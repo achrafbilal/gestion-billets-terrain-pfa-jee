@@ -15,6 +15,7 @@ const addZone = async (zone) => {
     return data
 }
 const editZone = async (id, zone) => {
+    console.log(zone, id)
     const { data } = await axios.put(`${URL}/${id}`, zone)
     return data
 }

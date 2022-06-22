@@ -14,16 +14,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-
-function createData(id, email, fullname, role) {
-  return { id, email, fullname, role };
-}
-
-const users = [
-  createData(1, "email1@mail.com", "Achraf bilal", "Manager"),
-  createData(2, "email1@mail.com", "Achraf bilal", "Seller"),
-  createData(3, "email1@mail.com", "Achraf bilal", "Client"),
-];
+import {
+  getUsers,
+  changeUserRole,
+  deleteUser,
+} from "../../../services/UserService";
 
 const style = {
   position: "absolute",
@@ -36,10 +31,19 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-export default function IndexUser() {
+export default function IndexUser({ auth }) {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(-1);
+  const [users, setUsers] = useState([]);
+  const getData = async () => {
+    const data = await getUsers();
+
+    setUsers(data);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   const handleClose = (mode) => {
     setOpen(mode);
   };
@@ -47,20 +51,61 @@ export default function IndexUser() {
     setUser(user);
     handleClose(true);
   };
+  const getRole = (role) => {
+    switch (role) {
+      case 1:
+        return "Administrator";
+
+      case 2:
+        return "Seller";
+      case 3:
+        return "client";
+      default:
+        return "Client";
+    }
+  };
+  const getWeight = (roleId) => {
+    switch (roleId) {
+      case 1:
+        return { fontWeight: 900 };
+      case 2:
+        return { fontWeight: 700 };
+      default:
+        return { fontWeight: 500 };
+    }
+  };
+  const saveButtonClickHandler = (roleId, userId) => {
+    const fetch = async () => {
+      await changeUserRole(userId, roleId);
+      await getData();
+      setOpen(false);
+    };
+    fetch();
+  };
+  const deleteButtonClickHandler = (userId) => {
+    const fetch = async () => {
+      if (window.confirm("Confirm deleting ticket ")) {
+        await deleteUser(userId);
+        await getData();
+      }
+    };
+    fetch();
+  };
   return (
     <TableContainer component={Paper}>
       <Container>
-        <Row>
+        {/* <Row>
           <Col>
             <IconButton color="success" aria-label="add" component="span">
               <AddIcon />
             </IconButton>
           </Col>
-        </Row>
+        </Row> */}
       </Container>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+            <TableCell>ID</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Fullname</TableCell>
             <TableCell>Role</TableCell>
@@ -73,11 +118,20 @@ export default function IndexUser() {
               key={u.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {u.email}
+              <TableCell scope="row">
+                <span style={getWeight(Number(u.roleId))}>{u.id}</span>
               </TableCell>
-              <TableCell scope="row">{u.fullname}</TableCell>
-              <TableCell scope="row">{u.role}</TableCell>
+              <TableCell scope="row">
+                <span style={getWeight(Number(u.roleId))}>{u.email}</span>
+              </TableCell>
+              <TableCell scope="row">
+                <span style={getWeight(Number(u.roleId))}>{u.fullName}</span>
+              </TableCell>
+              <TableCell scope="row">
+                <span style={getWeight(Number(u.roleId))}>
+                  {getRole(Number(u.roleId))}
+                </span>
+              </TableCell>
               <TableCell align="right">
                 <Container>
                   <IconButton
@@ -92,6 +146,7 @@ export default function IndexUser() {
                     color="error"
                     aria-label="delete"
                     component="span"
+                    onClick={() => deleteButtonClickHandler(u.id)}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -109,11 +164,18 @@ export default function IndexUser() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Change {user !== null && user.email} role
+            Change {user !== null && user.fullName} role
           </Typography>
           <div className="row mt-5">
             <div className="col-12">
-              <select name="" className="form-control form-select" id="">
+              <select
+                name=""
+                className="form-control form-select"
+                onChange={(ev) => {
+                  console.log(ev.target.value);
+                  setRole(Number(ev.target.value));
+                }}
+              >
                 <option value={-1}>Roles</option>
                 <option value={1}>Admin</option>
                 <option value={2}>Seller</option>
@@ -126,6 +188,7 @@ export default function IndexUser() {
                 <button
                   className="btn btn-success"
                   disabled={user === null || role < 1}
+                  onClick={() => saveButtonClickHandler(role, user.id)}
                 >
                   Save
                 </button>

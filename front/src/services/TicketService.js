@@ -20,7 +20,6 @@ const getSeatsLeft = async (zone) => {
 
 const addTicket = async (ticket) => {
     const { data } = await axios.post(`${URL}`, ticket)
-    console.log(data);
     return data
 }
 const editTicket = async (id, ticket) => {

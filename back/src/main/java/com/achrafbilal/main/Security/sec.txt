@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder pe = passwordEncoder();
         String mdp = pe.encode("emsi");
-        System.out.println(mdp);
+        (mdp);
         auth.inMemoryAuthentication().withUser("sara_admin").password(mdp).roles("ADMIN");
 
     }

@@ -1,16 +1,24 @@
 package com.achrafbilal.main.IServices;
 
 import com.achrafbilal.main.DTORequests.UserRequest;
-import com.achrafbilal.main.Entities.User;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
-
+import com.achrafbilal.main.DTOResponse.UserApiResponse;
+import com.achrafbilal.main.DTOResponse.UserResponse;
 import java.util.List;
 
 public interface UserService {
-    List<User> index();
-    User show(Long id);
-    User store(UserRequest request);
-    User edit(UserRequest request,Long id);
+    List<UserApiResponse> index();
+
+    UserResponse show(Long id);
+
+    UserResponse login(UserRequest user);
+
+    UserResponse store(UserRequest request);
+
+    UserResponse edit(UserRequest request, Long id);
+
+    Boolean editRole(Integer roleId, Long id);
+
+    String refreshToken(Long id, String token);
+
     void delete(Long id);
 }

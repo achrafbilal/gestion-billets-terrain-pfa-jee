@@ -18,4 +18,6 @@ public class Zone {
     @Column(unique = true)
     private String name;
     private Integer maxSeat;
+    @Transient
+    private Integer seatsLeft;
 }

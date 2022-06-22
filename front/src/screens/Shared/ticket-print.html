@@ -12,11 +12,32 @@
     />
     <title>Document</title>
   </head>
-  <body class="border">
-    <div class="row p-5">
-      <div class="col-4">Stadium Mohamed 5</div>
-      <div class="col-4">Client email : ${ticket.userEmail}</div>
-      <div class="col-4">Zone Name : ${ticket.zoneName}</div>
+  <body class="border d-flex justify-content-center align-items-center">
+    <div
+      class="row p-5 d-flex w-100"
+      style="background-image: linear-gradient(to right, black, gray)"
+    >
+      <div
+        class="col-4 border justify-content-center align-items-center text-center d-flex"
+      >
+        Stadium Mohamed 5
+      </div>
+      <div class="col-8">
+        <div class="row border justify-content-center" style="height: 90px">
+          <div
+            class="col-10 mx-1 justify-content-center align-items-center text-center d-flex"
+          >
+            Client email : ${ticket.userEmail}
+          </div>
+        </div>
+        <div class="row border justify-content-center" style="height: 90px">
+          <div
+            class="col-10 mx-1 justify-content-center align-items-center text-center d-flex"
+          >
+            Zone Name : ${ticket.zoneName}
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>

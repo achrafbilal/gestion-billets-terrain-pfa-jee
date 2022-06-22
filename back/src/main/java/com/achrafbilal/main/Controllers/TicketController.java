@@ -16,33 +16,35 @@ public class TicketController {
     TicketService ticketService;
 
     @GetMapping
-    public List<Ticket> index(){
+    public List<Ticket> index() {
         return ticketService.index();
     }
 
     @GetMapping("/client/{id}")
-    public List<Ticket> indexClient(@PathVariable Long id){
-        System.out.println(id);
+    public List<Ticket> indexClient(@PathVariable Long id) {
         return ticketService.indexClient(id);
     }
 
     @GetMapping("/seats/left/{id}")
-    public Integer seatsLeft(@PathVariable  Long id) {
+    public Integer seatsLeft(@PathVariable Long id) {
         return ticketService.seatsLeft(id);
     }
+
     @GetMapping("/{id}")
-    public Ticket show(@PathVariable Long id){
+    public Ticket show(@PathVariable Long id) {
         return ticketService.show(id);
     }
+
     @PostMapping("")
-    public Ticket create(@RequestBody TicketRequest request)
-    {
+    public Ticket create(@RequestBody TicketRequest request) {
         return ticketService.store(request);
     }
+
     @PutMapping("/{id}")
-    public Ticket edit(@RequestBody TicketRequest request,@PathVariable Long id) {
+    public Ticket edit(@RequestBody TicketRequest request, @PathVariable Long id) {
         return ticketService.edit(request, id);
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         ticketService.delete(id);
