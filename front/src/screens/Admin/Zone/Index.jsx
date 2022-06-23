@@ -31,11 +31,19 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: 10,
   p: 4,
+  justifyContent: "center",
+  alignItems: "center",
 };
 export default function IndexZone() {
   const [zones, setZones] = useState([]);
   const [mode, setMode] = useState(null);
   const [zone, setZone] = useState(null);
+  const [deletedModal, setDeletedModal] = useState({
+    mode: false,
+    type: false,
+    title: "title",
+    message: "message",
+  });
   const getData = async () => {
     const data = await getZones();
     setZones(data);
@@ -82,13 +90,31 @@ export default function IndexZone() {
   const maxSeatChangeHandler = (ev) => {
     setZone({ ...zone, maxSeat: Number(ev.target.value) });
   };
+
+  const handleOpenDeletedModal = (mode, type, title, message) => {
+    setDeletedModal({
+      mode: mode,
+      type: type,
+      title: title,
+      message: message,
+    });
+  };
   const deleteHandler = (id) => {
     const fetchDelete = async () => {
       const { data } = deleteZone(id)
-        .then((d) => getData())
-        .catch((err) => {
-          alert("Zone not deleted");
-        });
+        .then((d) => {
+          handleOpenDeletedModal(
+            true,
+            true,
+            "Success",
+            "Zone deleted successfully"
+          );
+
+          getData();
+        })
+        .catch(() =>
+          handleOpenDeletedModal(true, false, "Fail", "Could not delete zone")
+        );
 
       return data;
     };
@@ -210,6 +236,31 @@ export default function IndexZone() {
           ) : (
             <></>
           )}
+        </Box>
+      </Modal>
+      <Modal
+        open={deletedModal.mode}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="row border">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {deletedModal.title}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              {deletedModal.message}
+            </Typography>
+          </div>
+          <div className="row">
+            <div className="col-9"></div>
+            <button
+              className="btn btn-info my-3 col-3"
+              onClick={() => handleOpenDeletedModal(false, false, "", "")}
+            >
+              OK
+            </button>
+          </div>
         </Box>
       </Modal>
     </TableContainer>

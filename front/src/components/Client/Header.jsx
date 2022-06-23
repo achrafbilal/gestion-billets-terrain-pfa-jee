@@ -1,9 +1,11 @@
 import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
-const HeaderClient = () => {
+const HeaderClient = ({ auth, logout }) => {
   return (
     <Navbar
       bg="dark"
@@ -25,10 +27,10 @@ const HeaderClient = () => {
             <Nav.Link>My tickets</Nav.Link>
           </LinkContainer>
         </Nav>
-
-        <LinkContainer to="profile" className="mx-4 profile-icon">
-          <AccountCircleIcon sx={{ color: "#fff", fontSize: 30 }} />
-        </LinkContainer>
+        <Typography mt={2}>{auth.name}</Typography>
+        <Button onClick={logout}>
+          <LogoutIcon sx={{ color: "#fff", fontSize: 30 }} />
+        </Button>
       </Container>
     </Navbar>
   );

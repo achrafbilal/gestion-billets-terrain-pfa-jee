@@ -23,18 +23,19 @@ export default function Login({ setAuth }) {
         setAuth(d);
       })
 
-      .catch((er) => console.log(er));
+      .catch((er) => alert("Email or password incorrect"));
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const d = new FormData(event.currentTarget);
     console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+      email: d.get("email"),
+      password: d.get("password"),
     });
-    await fetchLogin(data.get("email"), data.get("password"));
+    await fetchLogin(d.get("email"), d.get("password"));
+  };
 
-    /*
+  /*
 
 
 onClick={() =>
@@ -49,8 +50,6 @@ onClick={() =>
 
 
     */
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -61,7 +60,7 @@ onClick={() =>
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url(/smv.jpeg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

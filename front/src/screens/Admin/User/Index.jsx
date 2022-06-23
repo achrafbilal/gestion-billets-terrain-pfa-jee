@@ -7,8 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
-import { Col, Container, Row } from "react-bootstrap";
-import AddIcon from "@mui/icons-material/Add";
+import { Container } from "react-bootstrap";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Modal from "@mui/material/Modal";
@@ -32,6 +31,12 @@ const style = {
   p: 4,
 };
 export default function IndexUser({ auth }) {
+  const [deletedModal, setDeletedModal] = useState({
+    mode: false,
+    type: false,
+    title: "title",
+    message: "message",
+  });
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(-1);
@@ -74,6 +79,14 @@ export default function IndexUser({ auth }) {
         return { fontWeight: 500 };
     }
   };
+  const handleOpenDeletedModal = (mode, type, title, message) => {
+    setDeletedModal({
+      mode: mode,
+      type: type,
+      title: title,
+      message: message,
+    });
+  };
   const saveButtonClickHandler = (roleId, userId) => {
     const fetch = async () => {
       await changeUserRole(userId, roleId);
@@ -85,7 +98,23 @@ export default function IndexUser({ auth }) {
   const deleteButtonClickHandler = (userId) => {
     const fetch = async () => {
       if (window.confirm("Confirm deleting ticket ")) {
-        await deleteUser(userId);
+        await deleteUser(userId)
+          .then(() =>
+            handleOpenDeletedModal(
+              true,
+              true,
+              "Success",
+              "User deleted successfully"
+            )
+          )
+          .catch(() =>
+            handleOpenDeletedModal(
+              true,
+              false,
+              "Error",
+              "could not delete the user"
+            )
+          );
         await getData();
       }
     };
@@ -93,15 +122,7 @@ export default function IndexUser({ auth }) {
   };
   return (
     <TableContainer component={Paper}>
-      <Container>
-        {/* <Row>
-          <Col>
-            <IconButton color="success" aria-label="add" component="span">
-              <AddIcon />
-            </IconButton>
-          </Col>
-        </Row> */}
-      </Container>
+      <Container></Container>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -196,6 +217,31 @@ export default function IndexUser({ auth }) {
             </div>
           </div>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={deletedModal.mode}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="row">
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {deletedModal.title}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              {deletedModal.message}
+            </Typography>
+          </div>
+          <div className="row">
+            <div className="col-9"></div>
+            <button
+              className="btn btn-info my-3 col-3"
+              onClick={() => handleOpenDeletedModal(false, false, "", "")}
+            >
+              OK
+            </button>
+          </div>
         </Box>
       </Modal>
     </TableContainer>

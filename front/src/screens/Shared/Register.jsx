@@ -11,19 +11,31 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as LinkR } from "react-router-dom";
+import { register } from "../../services/UserService";
 
 const theme = createTheme();
 
 export default function Register({ setAuth }) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const fetchRegister = async (fullName, email, password) => {
+    console.log({ fullName, email, password });
+    await register(fullName, email, password)
+      .then((d) => {
+        console.log(d);
+        setAuth(d);
+      })
 
+      .catch((er) => alert("Account not created"));
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const d = new FormData(event.currentTarget);
+    console.log({
+      fullName: d.get("fullName"),
+      email: d.get("email"),
+      password: d.get("password"),
+    });
+    await fetchRegister(d.get("fullName"), d.get("email"), d.get("password"));
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -49,27 +61,17 @@ export default function Register({ setAuth }) {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="fullName"
+                  label="Full Name"
+                  name="fullName"
+                  autoComplete="fullName"
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -97,14 +99,6 @@ export default function Register({ setAuth }) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() =>
-                setAuth({
-                  username: "achraf",
-                  password: "password",
-                  token: "token",
-                  role: 1,
-                })
-              }
             >
               Sign Up
             </Button>

@@ -1,10 +1,12 @@
 package com.achrafbilal.main.ServicesImpl;
 
+import com.achrafbilal.main.DAO.TicketRepo;
 import com.achrafbilal.main.DAO.UserRepo;
 import com.achrafbilal.main.DTORequests.UserRequest;
 import com.achrafbilal.main.DTOResponse.UserApiResponse;
 import com.achrafbilal.main.DTOResponse.UserResponse;
 import com.achrafbilal.main.Entities.User;
+import com.achrafbilal.main.IServices.TicketService;
 import com.achrafbilal.main.IServices.UserService;
 
 import org.springframework.beans.BeanUtils;
@@ -22,6 +24,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    TicketRepo ticketService;
 
     private String generateToken(Integer length) {
         SecureRandom random = new SecureRandom();
@@ -116,7 +120,10 @@ public class UserServiceImpl implements UserService {
 
         if (userO.isPresent()) {
             User user = userO.get();
-            userRepo.delete(user);
+            if (ticketService.findAllByUserId(user.getId()).isEmpty())
+                userRepo.delete(user);
+            else
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This user is already reserved");
         } else
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id " + id + " was not found");
 
