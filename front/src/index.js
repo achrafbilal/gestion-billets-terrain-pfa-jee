@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Login from './screens/Shared/Login';
 import Register from './screens/Shared/Register';
+import axios from 'axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -38,6 +39,21 @@ const RootComponent = () => {
 
 
   useEffect(() => {
+
+
+    const getData = async () => {
+
+      const { data } = await axios.get('http://localhost:9090/users', {
+        auth: {
+          username: 'admin1@mail.com',
+          password: 'password'
+        }
+      })
+      console.log(data);
+    }
+    getData();
+
+    return
     const a = JSON.parse(localStorage.getItem('auth'))
 
     console.log("auth", a)

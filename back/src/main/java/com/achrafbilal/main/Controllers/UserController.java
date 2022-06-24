@@ -50,7 +50,7 @@ public class UserController {
         return userService.show(id);
     }
 
-    @PostMapping("")
+    @PostMapping("/register")
     public UserResponse create(@RequestBody UserRequest request) {
         return userService.store(request);
     }
