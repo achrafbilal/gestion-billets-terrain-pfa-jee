@@ -10,26 +10,31 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/zones")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ZoneController {
     @Autowired
     ZoneService zoneService;
+
     @GetMapping
-    public List<Zone> index(){
+    public List<Zone> index() {
         return zoneService.index();
     }
+
     @GetMapping("/{id}")
-    public Zone show(@PathVariable Long id){
+    public Zone show(@PathVariable Long id) {
         return zoneService.show(id);
     }
+
     @PostMapping("")
     public Zone create(@RequestBody ZoneRequest request) {
         return zoneService.store(request);
     }
+
     @PutMapping("/{id}")
-    public Zone edit(@RequestBody ZoneRequest request,@PathVariable Long id) {
+    public Zone edit(@RequestBody ZoneRequest request, @PathVariable Long id) {
         return zoneService.edit(request, id);
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         zoneService.delete(id);

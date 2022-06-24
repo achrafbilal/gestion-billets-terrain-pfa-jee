@@ -24,7 +24,6 @@ const RootComponent = () => {
     localStorage.setItem("auth", JSON.stringify(user))
 
     setAuth(user)
-    return
     navigate(
       '/',
       {
@@ -41,19 +40,13 @@ const RootComponent = () => {
   useEffect(() => {
 
 
-    const getData = async () => {
+    // const getData = async () => {
 
-      const { data } = await axios.get('http://localhost:9090/users', {
-        auth: {
-          username: 'admin1@mail.com',
-          password: 'password'
-        }
-      })
-      console.log(data);
-    }
-    getData();
+    //   const { data } = await axios.get('http://localhost:9090/tickets', { headers: { 'Authorization': 'Basic ' + btoa(`admin1@mail.com:password`) } })
+    //   console.log(data);
+    // }
+    // getData();
 
-    return
     const a = JSON.parse(localStorage.getItem('auth'))
 
     console.log("auth", a)

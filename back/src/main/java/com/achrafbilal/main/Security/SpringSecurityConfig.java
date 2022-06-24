@@ -24,16 +24,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         final String admin = "ADMIN";
         final String seller = "SELLER";
+        final String client = "CLIENT";
+
         http
                 .csrf().disable()
                 .cors().disable()
                 .authorizeHttpRequests()
-                .antMatchers("/users/login", "/users/register").permitAll()
-                .antMatchers("/tickets/client/***").authenticated()
-                .antMatchers(HttpMethod.POST, "/tickets").hasAnyAuthority(seller)
+                // .antMatchers("/**").permitAll()
+                .antMatchers("/users/login", "/users/register").permitAll()// Working fine
+                .antMatchers(HttpMethod.POST, "/tickets").hasAnyAuthority(seller, admin)
                 .antMatchers(HttpMethod.GET, "/zones", "/users/role/3").hasAnyAuthority(seller, admin)
-                .antMatchers("/**").hasAnyAuthority(admin)
-                .anyRequest().authenticated()
+                .antMatchers("/tickets/client/**").hasAnyAuthority(client, admin)// Working fine
+                // .anyRequest().hasAuthority(admin)
                 .and().httpBasic();
     }
 
