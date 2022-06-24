@@ -24,7 +24,7 @@ const refreshToken = async (id, token) => {
 }
 
 const register = async (fullName, email, password) => {
-    const { data } = await axios.post(`${URL}`, { fullName: fullName, email: email, password: password })
+    const { data } = await axios.post(`${URL}/register`, { fullName: fullName, email: email, password: password })
     return data;
 }
 

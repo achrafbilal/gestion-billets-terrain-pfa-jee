@@ -35,7 +35,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/tickets").hasAnyAuthority(seller, admin)
                 .antMatchers(HttpMethod.GET, "/zones", "/users/role/3").hasAnyAuthority(seller, admin)
                 .antMatchers("/tickets/client/**").hasAnyAuthority(client, admin)// Working fine
-                // .anyRequest().hasAuthority(admin)
+                // .anyRequest().authenticated()
                 .and().httpBasic();
     }
 
